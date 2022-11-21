@@ -33,7 +33,7 @@
     
     sample_dataset.addEventListener('change',()=>{
         upload_dataset(sample_dataset.files[0]);
-        console.log(sample_dataset.files[0]);
+        // console.log(sample_dataset.files[0]);
     })
 
     
@@ -46,12 +46,15 @@
             return;
         }
         const form_data=new FormData();
-        form_data.append('sample_dataset',file);
+        form_data.set("dataset",file);
+        form_data.set('email',"kostisgratsos@hotmail.gr");
+        
         fetch("http://webkmeans.localhost/backend/api/upload.php",{
             method:'POST',
-            body:form_data
+            body:form_data,
         }).then(function(response){
             return response.json();
+            
         }).then(function(responseData){
             console.log(responseData);
             document.getElementsByName('sample_dataset')[0].value='';
