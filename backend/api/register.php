@@ -35,5 +35,7 @@ if($r2[0]['c']>0){
     $st = $mysqli->prepare($sql);
     $st->bind_param('ssssss',$email,$hashed_passwd,$fname,$lname,$api_key,$token);
 	$st->execute();
+	$identity=md5($email);
+	mkdir("../python/datasets/$identity");
 	print json_encode(['message'=>"user registered."]);
 ?>
