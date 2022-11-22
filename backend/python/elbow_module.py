@@ -1,22 +1,15 @@
 from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-import time
 import sys
-import json
 
 
+df=pd.read_csv(sys.argv[1])
 
-
-df=pd.read_csv("SampleCSVFile_53000kb.csv")
-
-columns=['Third','Fourth']
+columns=sys.argv[2].split(',')
 
 scaler=MinMaxScaler()
-# columns=['unleaded95','nomos']
 
-print(len(df))
 
 for i in range(len(columns)):
     scaler.fit(df[[columns[i]]])
@@ -32,4 +25,5 @@ for i in range(1,12):
 
 
 print(sse)
+
 
