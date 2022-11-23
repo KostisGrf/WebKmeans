@@ -2,7 +2,38 @@
 
 require_once '../dbconnect.php';
 
+$method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
+
+if($method!= "POST") {
+    header("HTTP/1.1 403 Forbidden");
+    print json_encode(['errormesg'=>"Method $method not allowed here."]);
+    exit;
+}
+
+if(!isset($body['email'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"email is required"]);
+    exit;
+}
+
+if(!isset($body['password'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"password is required"]);
+    exit;
+}
+
+if(!isset($body['fname'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"fname is required"]);
+    exit;
+}
+
+if(!isset($body['lname'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"lname is required"]);
+    exit;
+}
 
 $email=$body['email'];
 $hashed_passwd= password_hash($body['password'], PASSWORD_BCRYPT);

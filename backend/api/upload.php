@@ -1,19 +1,11 @@
 <?php
-header('Access-Control-Allow-Origin:*');
-header('Content-Type:application/json');
-header('Access-Control-Allow-Methods:POST');
-header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
-
-    // $body=json_decode(file_get_contents("php://input"), true);
-// print json_encode(['message'=>"file uploaded."]);
-
-// print json_encode($body);
-// print json_encode($_POST);
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
 
 
+if($method!= "POST") {
+    header("HTTP/1.1 403 Forbidden");
+    print json_encode(['errormesg'=>"Method $method not allowed here."]);
+    exit;
+}
 
 if(isset($_FILES['dataset'])){
     $file_name=$_FILES['dataset']['name'];

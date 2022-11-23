@@ -33,21 +33,21 @@ if(!isset($body['columns'])){
     exit;
 }
 
+
 $dataset=$body['dataset'];
 $email=$body['email'];
 $identity=md5($email);
 $clusters=$body['clusters'];
+$columns=$body['columns'];
 
 $path_parts = pathinfo($body['dataset']);
 $folder=$path_parts['filename'];
 
 
-
-$columns=['unleaded95','unleaded100'];
+file_put_contents("../python/datasets/$identity/$folder/".$folder . '_clusters.csv', '');
 $colums_string=implode("," ,$columns);
 $path="../python/datasets/$identity/$folder/$dataset";
+$path_to_save="../python/datasets/$identity/$folder/" .$folder .  '_clusters.csv';
 
 
-echo shell_exec("python ../python/elbow_module.py $path $colums_string $clusters  2>&1");
-
-?>
+echo shell_exec("python ../python/clusters_module.py $path $colums_string $clusters $path_to_save  2>&1");
