@@ -7,6 +7,7 @@ import sys
 df=pd.read_csv(sys.argv[1])
 
 columns=sys.argv[2].split(',')
+clusters=int(sys.argv[3])
 
 scaler=MinMaxScaler()
 
@@ -18,7 +19,7 @@ for i in range(len(columns)):
 
 sse = []
 
-for i in range(1,12):
+for i in range(1,clusters):
     kmeans = KMeans(n_clusters=i)
     kmeans.fit(df[columns])
     sse.append(kmeans.inertia_)
