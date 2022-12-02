@@ -1,6 +1,7 @@
 <?php
 
 require_once '../dbconnect.php';
+require '../phpmailer.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -68,5 +69,8 @@ if($r2[0]['c']>0){
 	$st->execute();
 	$identity=md5($email);
 	mkdir("../python/datasets/$identity");
+    send_mail($email,$token,$fname);
 	print json_encode(['message'=>"user registered."]);
+
+    
 ?>
