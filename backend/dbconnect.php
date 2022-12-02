@@ -11,7 +11,6 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 if(gethostname()=='users.iee.ihu.gr') {
 	$mysqli = new mysqli($host, $user, $pass, $db,null,'/home/student/it/2018/it185174/mysql/run/mysql.sock');
 } else {
-		$pass=null;
         $mysqli = new mysqli($host, $user, $pass, $db);
 }
 
