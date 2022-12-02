@@ -20,4 +20,11 @@
 .history
 .ionide
 
+#packages
+vendor
+composer.lock
+
+config.php
+
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
