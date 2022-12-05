@@ -11,7 +11,7 @@ require 'config.php';
 
 //Create an instance; passing `true` enables exceptions
 
-function send_mail($recipient,$token,$r_name){
+function send_mail($recipient,$r_name,$subject,$body,$altbody){
 
     require 'config.php';
 $mail = new PHPMailer(true);
@@ -41,9 +41,9 @@ try {
    
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'WebKmeans Account confirmation';
-    $mail->Body    = "copy this to your browser $host/backend/verify_email.php?token=$token";
-    $mail->AltBody = "copy this to your browser $host/backend/verify_email.php?token=$token";
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+    $mail->AltBody = $altbody;
 
     $mail->send();
     echo 'Verification email has been sent';
