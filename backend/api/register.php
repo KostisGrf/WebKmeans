@@ -2,6 +2,7 @@
 
 require_once '../dbconnect.php';
 require '../phpmailer.php';
+require '../config.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -69,7 +70,10 @@ if($r2[0]['c']>0){
 	$st->execute();
 	$identity=md5($email);
 	mkdir("../python/datasets/$identity");
-    send_mail($email,$token,$fname);
+    $email_body="copy this to your browser $domain/backend/verify_email.php?token=$token";
+    $alt_body="copy this to your browser $domain/backend/verify_email.php?token=$token";
+    $subject="WebKmeans Account confirmation";
+    send_mail($email,$fname,$subject,$email_body,$alt_body);
 	print json_encode(['message'=>"user registered."]);
 
     
