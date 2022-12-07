@@ -1,6 +1,8 @@
 <?php
 
 require_once '../dbconnect.php';
+require '../config.php';
+require '../phpmailer.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -26,10 +28,10 @@ $res = $st2->get_result();
 $res = $res->fetch_assoc();
 $fname=$res['fname'];
 
-$email_body="copy this to your browser $domain/backend/verify_delete.php?token=$token";
-$alt_body="copy this to your browser $domain/backend/verify_delete.php?token=$token";
+$email_body="copy this to your browser $domain/www/password_reset.html?token=$token";
+$alt_body="copy this to your browser $domain/www/password_reset.html?token=$token";
 $subject="Password reset";
-send_mail($email,$fname,$subject,$email_body,$alt_body);
+send_mail($body['email'],$fname,$subject,$email_body,$alt_body);
 print json_encode(['message'=>"check your email for link confirmation"]);
 
 
