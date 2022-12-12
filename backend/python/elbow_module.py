@@ -2,6 +2,8 @@ from sklearn.cluster import KMeans
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import sys
+from kneed import KneeLocator
+import json
 
 
 df=pd.read_csv(sys.argv[1])
@@ -25,6 +27,11 @@ for i in range(1,clusters):
     sse.append(kmeans.inertia_)
 
 
-print(sse)
+
+result=list(map(str, sse))
+kl=KneeLocator(range(1,clusters),sse,curve="convex",direction="decreasing")
+
+print(json.dumps({"sse":result,"suggested-k":str(kl.elbow)}))
+
 
 

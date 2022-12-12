@@ -48,6 +48,7 @@ $colums_string=implode("," ,$columns);
 $path="../python/datasets/$identity/$folder/$dataset";
 
 
-echo shell_exec("python ../python/elbow_module.py $path $colums_string $clusters  2>&1");
+$output=shell_exec("python ../python/elbow_module.py $path $colums_string $clusters  2>&1");
+echo ($output);
 
 ?>
