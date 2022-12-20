@@ -3,6 +3,7 @@
 require_once '../dbconnect.php';
 require '../config.php';
 require '../phpmailer.php';
+require '../token.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -10,6 +11,12 @@ $body = json_decode(file_get_contents("php://input"), true);
 if(!isset($body['email'])){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"email is required"]);
+    exit;
+}
+
+if(checkTokenByemail($body['email'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"You can resend email verification every 2 minutes"]);
     exit;
 }
 
@@ -27,6 +34,11 @@ $st2->execute();
 $res = $st2->get_result();
 $res = $res->fetch_assoc();
 $fname=$res['fname'];
+
+
+
+
+
 
 $email_body="copy this to your browser $domain/www/password_reset.html?token=$token";
 $alt_body="copy this to your browser $domain/www/password_reset.html?token=$token";
