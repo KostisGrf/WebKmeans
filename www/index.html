@@ -18,7 +18,6 @@
                     <th width="50%" class="text-right"><b>select file</b></th>
                     <th width="50%">
                         <input type="file" name="sample_dataset"  />
-                        <input type="file" name="public_dataset"  />
                     </th>
             </tr>
             </table>
@@ -31,16 +30,12 @@
 
 <script>
     const sample_dataset=document.getElementsByName('sample_dataset')[0];
-    const public_dataset=document.getElementsByName('public_dataset')[0];
     
     sample_dataset.addEventListener('change',()=>{
         upload_dataset(sample_dataset.files[0],"sample");
         // console.log(sample_dataset.files[0]);
     })
 
-    public_dataset.addEventListener("change",()=>{
-        upload_dataset(public_dataset.files[0],"public");
-    })
 
     
     var allowedExtensions = /(\.csv|\.xlsx)$/i;
@@ -56,21 +51,19 @@
         form_data.set("dataset",file);
         form_data.set('email',"kostisgratsos@hotmail.gr");
         form_data.set('apikey',"a0b45a3c0ad0c3bee5d22dfeb4295742");
+        form_data.set("dataset-type","public");
 
         var upload_url;
 
         
-        fetch(dataset==="public"
-        ? "http://webkmeans.localhost/backend/api/upload-public-dataset"
-        : "http://webkmeans.localhost/backend/api/upload",{
+        fetch("http://webkmeans.localhost/backend/api/upload-dataset",{
             method:'POST',
             body:form_data,
         }).then(function(response){
            return response.json();
         }).then(function(responseData){
-            // console.log(responseData);
+            console.log(responseData);
             document.getElementsByName('sample_dataset')[0].value='';
-            document.getElementsByName('public_dataset')[0].value='';
         })
     }
 
