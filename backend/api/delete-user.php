@@ -3,6 +3,7 @@
 require_once '../dbconnect.php';
 require '../config.php';
 require '../phpmailer.php';
+require '../token.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -20,13 +21,6 @@ if(!isset($body['apikey'])){
 }
 
 
-$token=bin2hex(random_bytes(16));
-
-$sql = 'call deleteUser(?,?)';
-$st = $mysqli->prepare($sql);
-$st->bind_param('ss',$body['apikey'],$token);
-$st->execute();
-
 $sql2 = 'SELECT email,fname FROM users WHERE apiKey=?';
 $st2 = $mysqli->prepare($sql2);
 $st2->bind_param('s',$body['apikey']);
@@ -35,6 +29,21 @@ $res = $st2->get_result();
 $res = $res->fetch_assoc();
 $email=$res['email'];
 $fname=$res['fname'];
+
+if(checkTokenByemail($email)){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"You can resend email verification every 2 minutes"]);
+    exit;
+}
+
+$token=bin2hex(random_bytes(16));
+
+$sql = 'call deleteUser(?,?)';
+$st = $mysqli->prepare($sql);
+$st->bind_param('ss',$body['apikey'],$token);
+$st->execute();
+
+
 
 
 
