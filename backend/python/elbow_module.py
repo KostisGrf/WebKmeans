@@ -5,8 +5,11 @@ import sys
 from kneed import KneeLocator
 import json
 
+if (sys.argv[4]=="csv"):
+    df=pd.read_csv(sys.argv[1])
+else:
+    df=pd.read_excel(sys.argv[1])
 
-df=pd.read_csv(sys.argv[1])
 
 columns=sys.argv[2].split(',')
 clusters=int(sys.argv[3])
@@ -22,7 +25,7 @@ for i in range(len(columns)):
 sse = []
 
 for i in range(1,clusters):
-    kmeans = KMeans(n_clusters=i)
+    kmeans = KMeans(n_clusters=i,n_init='auto')
     kmeans.fit(df[columns])
     sse.append(kmeans.inertia_)
 

@@ -7,7 +7,10 @@ import os
 
 
 
-df=pd.read_csv(sys.argv[1],encoding='utf-8')
+if (sys.argv[4]=="csv"):
+    df=pd.read_csv(sys.argv[1])
+else:
+    df=pd.read_excel(sys.argv[1])
 
 columns=columns=sys.argv[2].split(',')
 clusters=int(sys.argv[3])
@@ -20,10 +23,11 @@ for i in range(len(columns)):
 
 
 
-kmeans=KMeans(n_clusters=clusters)
+kmeans=KMeans(n_clusters=clusters,n_init='auto')
 predicted=kmeans.fit_predict(df[columns])
-df['cluster']=predicted
+df['cluster']=predicted+1
 
 
 
-df.to_csv(sys.argv[4],encoding='utf-8')
+
+df.to_csv(sys.argv[5],encoding='utf-8')

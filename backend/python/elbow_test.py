@@ -8,9 +8,10 @@ import matplotlib.pyplot as plt
 
 # print(os.getcwd())
 
-df=pd.read_csv("backend/python/fuel_prices_52.csv")
+df=pd.read_excel("backend/python/datasets/file_example_XLSX_100.xlsx")
+# print(df)
 
-columns=["unleaded95","unleaded100"]
+columns=["Age"]
 
 
 scaler=MinMaxScaler()
@@ -23,17 +24,17 @@ for i in range(len(columns)):
 
 sse = []
 
-for i in range(1,10):
+for i in range(1,6):
     kmeans = KMeans(n_clusters=i)
     kmeans.fit(df[columns])
     sse.append(kmeans.inertia_)
 
-kl=KneeLocator(range(1,10),sse,curve="convex",direction="decreasing")
+kl=KneeLocator(range(1,6),sse,curve="convex",direction="decreasing")
 print(kl.elbow)
 
 print(sse)
 
-plt.plot(range(1,10), sse, 'bx-')
+plt.plot(range(1,6), sse, 'bx-')
 plt.xlabel('Values of K')
 plt.ylabel('Distortion')
 plt.title('The Elbow Method using Distortion')
