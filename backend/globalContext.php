@@ -2,6 +2,7 @@
 
 date_default_timezone_set('Europe/Athens');
 
+
 function checkTokenExpired($token){
     require  'dbconnect.php';
 
@@ -69,5 +70,36 @@ function checkTokenByemail($email){
     }
     
 }
+
+function getEmail($apikey){
+        require  'dbconnect.php';
+        $sql = 'SELECT email FROM users WHERE apiKey=?';
+        $st = $mysqli->prepare($sql);
+        $st->bind_param('s',$apikey);
+        $st->execute();
+        $res = $st->get_result();
+        $res = $res->fetch_assoc();
+        $email=$res['email'];
+        return $email;
+}
+
+function checkApiKeyExists($apikey){
+    require  'dbconnect.php';
+    $sql='SELECT count(*) as count FROM users WHERE apiKey=?';
+    $st = $mysqli->prepare($sql);
+    $st->bind_param('s',$apikey);
+    $st->execute();
+    $res = $st->get_result();
+    $res = $res->fetch_assoc();
+
+    return $res['count']>0;
+}
+
+function rrmdir($directory)
+{
+    array_map(fn (string $file) => is_dir($file) ? rrmdir($file) : unlink($file), glob($directory . '/' . '*'));
+    return rmdir($directory);
+}
+
 
 ?>
