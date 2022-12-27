@@ -1,10 +1,16 @@
 <?php
 require_once 'dbconnect.php';
-require 'token.php';
+require 'globalContext.php';
 
 $body = json_decode(file_get_contents("php://input"), true);
 
-$hashed_passwd= password_hash($body['password'], PASSWORD_BCRYPT);
+if(!isset($_GET['token'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"token is required"]);
+    exit;
+}
+
+
 
 if(!checkTokenExists($body['token'])){
     header("HTTP/1.1 400 Bad Request");
@@ -18,6 +24,8 @@ if(checkTokenExpired($body['token'])){
     print json_encode(['errormesg'=>"token has expired"]);
     exit;
 }
+
+$hashed_passwd= password_hash($body['password'], PASSWORD_BCRYPT);
 
 $sql = 'call update_password(?,?)';
 $st = $mysqli->prepare($sql);

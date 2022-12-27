@@ -1,9 +1,13 @@
 <?php
 
 require_once 'dbconnect.php';
-require '../backend/token.php';
-require '../backend/files.php';
+require 'globalContext.php';
 
+if(!isset($_GET['token'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"token is required"]);
+    exit;
+}
 
 if(!checkTokenExists($_GET['token'])){
     header("HTTP/1.1 400 Bad Request");
