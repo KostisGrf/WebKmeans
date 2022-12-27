@@ -3,7 +3,7 @@
 require_once '../dbconnect.php';
 require '../config.php';
 require '../phpmailer.php';
-require '../token.php';
+require '../globalContext.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -17,6 +17,12 @@ if($method!='DELETE'){
 if(!isset($body['apikey'])){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"apikey is required"]);
+    exit;
+}
+
+if(!checkApiKeyExists($body['apikey'])){
+    header("HTTP/1.1 401 Unauthorized");
+    print json_encode(['errormesg'=>"This Apikey does not exist."]);
     exit;
 }
 
@@ -42,8 +48,6 @@ $sql = 'call deleteUser(?,?)';
 $st = $mysqli->prepare($sql);
 $st->bind_param('ss',$body['apikey'],$token);
 $st->execute();
-
-
 
 
 

@@ -1,7 +1,7 @@
 <?php
 
 require_once '../dbconnect.php';
-require '../files.php';
+require '../globalContext.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
@@ -37,6 +37,12 @@ if(!($body['dataset-type']=="public"||$body['dataset-type']=="personal")){
     exit;
 }
 
+if(!checkApiKeyExists($body['apikey'])){
+    header("HTTP/1.1 401 Unauthorized");
+    print json_encode(['errormesg'=>"This Apikey does not exist."]);
+    exit;
+}
+
 
 $sql2 = 'SELECT email,grandPublicDataset FROM users WHERE apiKey=?';
 $st2 = $mysqli->prepare($sql2);
@@ -48,13 +54,15 @@ $email=$res['email'];
 $grandPublicDataset=$res['grandPublicDataset'];
 
 $dataset=$body['dataset'];
+$path_parts = pathinfo($body['dataset']);
+$file_name=$path_parts['filename'];
 
 
 
 
 if($body['dataset-type']=="public"){
     if($grandPublicDataset==1){
-        $folder="../python/datasets/public_datasets/$dataset";
+        $folder="../python/datasets/public_datasets/$file_name";
         if(file_exists($folder)){
             rrmdir($folder);
         }else{
@@ -70,7 +78,7 @@ if($body['dataset-type']=="public"){
    
 }else{
     $identity=md5($email);
-    $folder="../python/datasets/$identity/$dataset";
+    $folder="../python/datasets/$identity/$file_name";
     if(file_exists($folder)){
         rrmdir($folder);
     }else{

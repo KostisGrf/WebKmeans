@@ -3,7 +3,7 @@
 require_once '../dbconnect.php';
 require '../config.php';
 require '../phpmailer.php';
-require '../token.php';
+require '../globalContext.php';
 
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);

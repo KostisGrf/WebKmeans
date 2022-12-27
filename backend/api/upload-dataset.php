@@ -1,6 +1,10 @@
 <?php
+
+header("Access-Control-Allow-Origin: *");
+
 $method=$_SERVER['REQUEST_METHOD'];
 require_once '../dbconnect.php';
+require '../globalContext.php';
 
 
 if($method!= "POST") {
@@ -27,13 +31,26 @@ if(!($_POST['dataset-type']=="public"||$_POST['dataset-type']=="personal")){
     exit;
 }
 
+if(!checkApiKeyExists($_POST['apikey'])){
+    header("HTTP/1.1 401 Unauthorized");
+    print json_encode(['errormesg'=>"This Apikey does not exist."]);
+    exit;
+}
+
 
 if(isset($_FILES['dataset'])){
+
+    $allowed = array('csv','xlsx','xls');
     $file_name=$_FILES['dataset']['name'];
+    $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+    if (!in_array($ext, $allowed)) {
+        header("HTTP/1.1 415 Unsupported Media Type");
+        print json_encode(['errormesg'=>"Only csv and xlsx are valid file types."]);
+        exit;
+    }
+
     $path_parts = pathinfo("$file_name");
     $filename=$path_parts['filename'];
-    $email=$_POST['email'];
-    $identity=md5($email);
     if($_POST['dataset-type']=="public"){
         $sql2 = 'SELECT grandPublicDataset FROM users WHERE apiKey=?';
         $st2 = $mysqli->prepare($sql2);
@@ -58,6 +75,8 @@ if(isset($_FILES['dataset'])){
             exit;
         }
     }else{
+        $email=getEmail($_POST['apikey']);
+        $identity=md5($email);
         $folder="../python/datasets/$identity/$filename";
 
         if(!file_exists($folder)){
