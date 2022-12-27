@@ -1,13 +1,15 @@
--- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `web_kmeans` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `web_kmeans`;
+-- MariaDB dump 10.19  Distrib 10.4.22-MariaDB, for Win64 (AMD64)
 --
 -- Host: 127.0.0.1    Database: web_kmeans
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.21-MariaDB
+-- Server version	10.4.22-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +23,7 @@
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `email` varchar(45) NOT NULL,
@@ -30,8 +32,9 @@ CREATE TABLE `users` (
   `lname` varchar(45) NOT NULL,
   `apiKey` varchar(100) NOT NULL,
   `verified` tinyint(1) NOT NULL,
+  `grandPublicDataset` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,10 +43,11 @@ CREATE TABLE `users` (
 
 DROP TABLE IF EXISTS `verification_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `verification_tokens` (
   `userid` bigint(20) NOT NULL,
   `token` varchar(100) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`userid`),
   KEY `fk_userid` (`userid`),
   CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -63,7 +67,7 @@ CREATE TABLE `verification_tokens` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `deleteUser`(apikeyyy varchar(100),token varchar(100))
+CREATE PROCEDURE `deleteUser`(apikeyyy varchar(100),token varchar(100))
 BEGIN
 DECLARE useridd BIGINT;
 SET useridd=(SELECT id FROM users WHERE apiKey=apikeyyy LIMIT 1);
@@ -84,7 +88,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `forgotPassword`(email1 varchar(100),token varchar(100))
+CREATE PROCEDURE `forgotPassword`(email1 varchar(100),token varchar(100))
 BEGIN
 DECLARE useridd BIGINT;
 SET useridd=(SELECT id FROM users WHERE email=email1 LIMIT 1);
@@ -105,7 +109,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `registerUser`(email varchar(45),passwd varchar(100),fname varchar(45),lname varchar(45),apikeyyy varchar(100),token varchar(100))
+CREATE PROCEDURE `registerUser`(email varchar(45),passwd varchar(100),fname varchar(45),lname varchar(45),apikeyyy varchar(100),token varchar(100))
 BEGIN
 DECLARE useridd BIGINT;
 INSERT INTO users(email,password,fname,lname,apiKey,verified) VALUES (email,passwd,fname,lname,apikeyyy,0);
@@ -127,7 +131,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `update_password`(new_password varchar(100),vtoken varchar(100))
+CREATE PROCEDURE `update_password`(new_password varchar(100),vtoken varchar(100))
 BEGIN
 UPDATE users 
 JOIN verification_tokens ON users.id=verification_tokens.userid
@@ -151,7 +155,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `verifyAccount`(vtoken varchar(100))
+CREATE PROCEDURE `verifyAccount`(vtoken varchar(100))
 BEGIN
 UPDATE users 
 JOIN verification_tokens ON users.id=verification_tokens.userid
@@ -175,7 +179,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `verifyDelete`(vtoken varchar(100))
+CREATE PROCEDURE `verifyDelete`(vtoken varchar(100))
 BEGIN
 DELETE users FROM users  
 JOIN verification_tokens ON users.id=verification_tokens.userid
@@ -198,4 +202,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-07  2:40:33
+-- Dump completed on 2022-12-28  1:32:08
