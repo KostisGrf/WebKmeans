@@ -1,7 +1,7 @@
 <?php
 $host='127.0.0.1';
 $db = 'web_kmeans';
-$user="localhost";
+$user="root";
 $pass="1234";
 
 // $user=$DB_USER;
