@@ -1,51 +1,62 @@
 <?php
-require_once '../dbconnect.php';
 require '../globalContext.php';
 require_once '../../vendor/autoload.php';
 $method=$_SERVER['REQUEST_METHOD'];
+$body = json_decode(file_get_contents("php://input"), true);
 
-if($method!= "GET") {
+if($method!= "POST") {
     header("HTTP/1.1 403 Forbidden");
     print json_encode(['errormesg'=>"Method $method not allowed here."]);
     exit;
 }
 
-if(!isset($_GET['apikey'])){
+if(!isset($body['apikey'])){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"apikey is required"]);
     exit;
 }
 
-if(!isset($_GET['dataset'])){
+if(!isset($body['dataset'])){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"dataset is required"]);
     exit;
 }
 
-if(!isset($_GET['dataset-type'])){
+if(!isset($body['dataset-type'])){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"dataset-type is required"]);
     exit;
 }
 
-if(!($_GET['dataset-type']=="public"||$_GET['dataset-type']=="personal")){
+if(!($body['dataset-type']=="public"||$body['dataset-type']=="personal")){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"dataset-type value can only be personal or public"]);
     exit;
 }
 
-if(!checkApiKeyExists($_GET['apikey'])){
+if(!isset($body['clusters'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"clusters field is required"]);
+    exit;
+}
+
+if(!isset($body['columns'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"columns field is required"]);
+    exit;
+}
+
+if(!checkApiKeyExists($body['apikey'])){
     header("HTTP/1.1 401 Unauthorized");
     print json_encode(['errormesg'=>"This Apikey does not exist."]);
     exit;
 }
 
-$path_parts = pathinfo($_GET['dataset']);
+$dataset=basename($body['dataset']);
+$path_parts = pathinfo($dataset);
 $folder=$path_parts['filename'];
-$ext = pathinfo($_GET['dataset'], PATHINFO_EXTENSION);
-$dataset=basename($_GET['dataset']);
 
-if($_GET['dataset-type']=='public'){
+if($body['dataset-type']=='public'){
     if(!file_exists("../python/datasets/public_datasets/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
@@ -53,7 +64,7 @@ if($_GET['dataset-type']=='public'){
     }
     $file_path="../python/datasets/public_datasets/$folder";
 }else{
-    $email=getEmail($_GET['apikey']);
+    $email=getEmail($body['apikey']);
     $identity=md5($email);
     if(!file_exists("../python/datasets/$identity/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
@@ -63,12 +74,16 @@ if($_GET['dataset-type']=='public'){
     $file_path="../python/datasets/$identity/$folder";
 }
 
+$columns=$body['columns'];
+$colums_string=implode("," ,$columns);
+$ext = pathinfo($body['dataset'], PATHINFO_EXTENSION);
+
 if($ext=="csv"){
     $file=fopen("$file_path/$dataset",'r');
     $headers = fgetcsv($file, 1024, ',');
     $headers_=array();
     foreach($headers as $value){
-    $value = preg_replace("/[^a-zA-Z0-9]+/", "", $value);
+    $value = preg_replace("/[^a-zA-Z0-9-_\.]+/", "", $value);
     array_push($headers_,$value);
 }
     $filerow =0;
@@ -88,7 +103,7 @@ if($ext=="csv"){
     $headers=$data[0];
     $headers_=array();
     foreach($headers as $value){
-    $value = preg_replace("/[^a-zA-Z0-9]+/", "", $value);
+    $value = preg_replace("/[^a-zA-Z0-9-_\.]+/", "", $value);
     array_push($headers_,$value);
 }
     for($i=1;$i<count($data);$i++){
@@ -96,14 +111,41 @@ if($ext=="csv"){
     }
 }
 
+
+if((empty($columns))||!(array_intersect($columns, $headers_) === $columns)){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"column doesn't exist"]);
+    exit();
+}
+
 $numerical_columns=[];
 foreach($headers_ as $value_){
-    ${$value_}=array_column($full_csv, $value_);
+    ${$value_}=array_column($full_csv, "$value_");
     if ( count( ${$value_} ) === count( array_filter( ${$value_}, 'is_numeric' ) ) ) {
        array_push($numerical_columns,$value_);
     }
 }
 
-print json_encode(["items"=>$full_csv,"numerical_columns"=>$numerical_columns],JSON_UNESCAPED_UNICODE);
+if(!(array_intersect($columns, $numerical_columns) === $columns)){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"columns must be numerical"]);
+    exit();
+}
 
-?>
+$clusters=$body['clusters'];
+
+file_put_contents("$file_path/".$folder . "_clusters_$clusters.csv", '');
+$path="$file_path/$dataset";
+$path_to_save="$file_path/" .$folder .  "_clusters_$clusters.csv";
+
+echo shell_exec("python ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
+$file=fopen("$path_to_save",'r');
+$headers = fgetcsv($file, 1024, ',');
+$filerow =0;
+while (($row = fgetcsv($file, 1024, ','))&&($filerow<=99)) {
+    $csv[] = array_combine($headers, $row);
+    $filerow++;
+}
+fclose($file);
+
+print json_encode(["items"=>$csv],JSON_UNESCAPED_UNICODE);

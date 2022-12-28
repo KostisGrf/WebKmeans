@@ -68,8 +68,8 @@ if($r2[0]['c']>0){
 	$st->execute();
 	$identity=md5($email);
 	mkdir("../python/datasets/$identity");
-    $email_body="copy this to your browser $domain/backend/verify_email.php?token=$token";
-    $alt_body="copy this to your browser $domain/backend/verify_email.php?token=$token";
+    $email_body="copy this to your browser $domain/server/verify_email.php?token=$token";
+    $alt_body="copy this to your browser $domain/server/verify_email.php?token=$token";
     $subject="WebKmeans Account confirmation";
     send_mail($email,$fname,$subject,$email_body,$alt_body);
 	print json_encode(['message'=>"user registered."]);

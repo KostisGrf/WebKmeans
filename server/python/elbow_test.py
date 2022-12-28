@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 # print(os.getcwd())
 
-df=pd.read_excel("backend/python/datasets/fuel_prices_52.csv",index_col=0)
+df=pd.read_excel("server/python/datasets/fuel_prices_52.csv",index_col=0)
 # df=pd.read_csv("backend/python/datasets/fuel_prices_52.csv",index_col=0)
 # df.reset_index(drop=True)
 # print(df)

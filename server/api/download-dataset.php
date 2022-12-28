@@ -34,7 +34,9 @@ if(!checkApiKeyExists($_GET['apikey'])){
 
 $dataset=basename($_GET['dataset']);
 $path_parts = pathinfo($dataset);
-$folder=$path_parts['dataset'];
+$folder=$path_parts['filename'];
+$folder = preg_replace('/_clusters_.*/', '', $folder);
+
 
 if($_GET['dataset-type']=='public'){
     if(!file_exists("../python/datasets/public_datasets/$folder/$dataset")){

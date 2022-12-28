@@ -60,6 +60,7 @@ if($body['dataset-type']=="public"){
         $folder="../python/datasets/public_datasets/$file_name";
         if(file_exists($folder)){
             rrmdir($folder);
+            print json_encode(['message'=>"dataset deleted"]);
         }else{
             header("HTTP/1.1 400 Bad Request");
             print json_encode(['errormesg'=>"dataset does not exist"]);
@@ -76,6 +77,7 @@ if($body['dataset-type']=="public"){
     $folder="../python/datasets/$identity/$file_name";
     if(file_exists($folder)){
         rrmdir($folder);
+        print json_encode(['message'=>"dataset deleted"]);
     }else{
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);

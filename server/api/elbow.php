@@ -52,6 +52,7 @@ if(!checkApiKeyExists($body['apikey'])){
     exit;
 }
 
+$clusters=$body['clusters'];
 $dataset=basename($body['dataset']);
 $path_parts = pathinfo($dataset);
 $folder=$path_parts['filename'];
@@ -83,7 +84,7 @@ if($ext=="csv"){
     $headers = fgetcsv($file, 1024, ',');
     $headers_=array();
     foreach($headers as $value){
-    $value = preg_replace("/[^a-zA-Z0-9]+/", "", $value);
+    $value = preg_replace("/[^a-zA-Z0-9-_\.]+/", "", $value);
     array_push($headers_,$value);
 }
     $filerow =0;
@@ -103,7 +104,7 @@ if($ext=="csv"){
     $headers=$data[0];
     $headers_=array();
     foreach($headers as $value){
-    $value = preg_replace("/[^a-zA-Z0-9]+/", "", $value);
+    $value = preg_replace("/[^a-zA-Z0-9-_\.]+/", "", $value);
     array_push($headers_,$value);
 }
     for($i=1;$i<count($data);$i++){
@@ -111,6 +112,9 @@ if($ext=="csv"){
     }
 }
 
+if($headers_[0]==0||$headers_[0]==1){
+    array_shift($headers_);
+}
 
 if((empty($columns))||!(array_intersect($columns, $headers_) === $columns)){
     header("HTTP/1.1 400 Bad Request");
@@ -132,20 +136,9 @@ if(!(array_intersect($columns, $numerical_columns) === $columns)){
     exit();
 }
 
-$clusters=$body['clusters'];
-
-file_put_contents("$file_path/".$folder . "_clusters_$clusters.csv", '');
 $path="$file_path/$dataset";
-$path_to_save="$file_path/" .$folder .  "_clusters_$clusters.csv";
 
-echo shell_exec("python ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
-$file=fopen("$path_to_save",'r');
-$headers = fgetcsv($file, 1024, ',');
-$filerow =0;
-while (($row = fgetcsv($file, 1024, ','))&&($filerow<=99)) {
-    $csv[] = array_combine($headers, $row);
-    $filerow++;
-}
-fclose($file);
+$output=shell_exec("python ../python/elbow_module.py $path $colums_string $clusters $ext  2>&1");
+echo ($output);
 
-print json_encode(["items"=>$csv],JSON_UNESCAPED_UNICODE);
+?>

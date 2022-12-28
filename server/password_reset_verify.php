@@ -4,13 +4,17 @@ require 'globalContext.php';
 
 $body = json_decode(file_get_contents("php://input"), true);
 
-if(!isset($_GET['token'])){
+if(!isset($body['token'])){
     header("HTTP/1.1 400 Bad Request");
     print json_encode(['errormesg'=>"token is required"]);
     exit;
 }
 
-
+if(!isset($body['password'])){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"password is required"]);
+    exit;
+}
 
 if(!checkTokenExists($body['token'])){
     header("HTTP/1.1 400 Bad Request");

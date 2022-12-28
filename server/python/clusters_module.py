@@ -12,6 +12,8 @@ if (sys.argv[4]=="csv"):
 else:
     df=pd.read_excel(sys.argv[1])
 
+df1=df.copy()
+
 columns=columns=sys.argv[2].split(',')
 clusters=int(sys.argv[3])
 
@@ -24,7 +26,7 @@ for i in range(len(columns)):
 
 kmeans=KMeans(n_clusters=clusters,n_init='auto')
 predicted=kmeans.fit_predict(df[columns])
-df['cluster']=predicted+1
+df1['cluster']=predicted+1
 
 
-df.to_csv(sys.argv[5],index=False,encoding='utf-8')
+df1.to_csv(sys.argv[5],index=False,encoding='utf-8')
