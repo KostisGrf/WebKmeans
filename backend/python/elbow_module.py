@@ -4,6 +4,8 @@ from sklearn.preprocessing import MinMaxScaler
 import sys
 from kneed import KneeLocator
 import json
+import warnings
+warnings.filterwarnings('ignore')
 
 if (sys.argv[4]=="csv"):
     df=pd.read_csv(sys.argv[1])
@@ -16,7 +18,6 @@ clusters=int(sys.argv[3])
 
 scaler=MinMaxScaler()
 
-
 for i in range(len(columns)):
     scaler.fit(df[[columns[i]]])
     df[columns[i]]=scaler.transform(df[[columns[i]]])
@@ -28,7 +29,6 @@ for i in range(1,clusters):
     kmeans = KMeans(n_clusters=i,n_init='auto')
     kmeans.fit(df[columns])
     sse.append(kmeans.inertia_)
-
 
 
 result=list(map(str, sse))

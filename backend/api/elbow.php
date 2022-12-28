@@ -4,7 +4,6 @@ require_once '../../vendor/autoload.php';
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
 
-
 if($method!= "POST") {
     header("HTTP/1.1 403 Forbidden");
     print json_encode(['errormesg'=>"Method $method not allowed here."]);
@@ -53,14 +52,13 @@ if(!checkApiKeyExists($body['apikey'])){
     exit;
 }
 
-
 $clusters=$body['clusters'];
 $dataset=basename($body['dataset']);
 $path_parts = pathinfo($dataset);
 $folder=$path_parts['filename'];
 
 if($body['dataset-type']=='public'){
-    if(!file_exists("../python/datasets/public_datasets/$folder")){
+    if(!file_exists("../python/datasets/public_datasets/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
@@ -69,7 +67,7 @@ if($body['dataset-type']=='public'){
 }else{
     $email=getEmail($body['apikey']);
     $identity=md5($email);
-    if(!file_exists("../python/datasets/$identity/$folder")){
+    if(!file_exists("../python/datasets/$identity/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
@@ -114,6 +112,9 @@ if($ext=="csv"){
     }
 }
 
+if($headers_[0]==0||$headers_[0]==1){
+    array_shift($headers_);
+}
 
 if((empty($columns))||!(array_intersect($columns, $headers_) === $columns)){
     header("HTTP/1.1 400 Bad Request");
@@ -136,7 +137,6 @@ if(!(array_intersect($columns, $numerical_columns) === $columns)){
 }
 
 $path="$file_path/$dataset";
-
 
 $output=shell_exec("python ../python/elbow_module.py $path $colums_string $clusters $ext  2>&1");
 echo ($output);

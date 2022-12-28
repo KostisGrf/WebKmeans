@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import sys
-import os
-
+import warnings
+warnings.filterwarnings('ignore')
 
 
 if (sys.argv[4]=="csv"):
@@ -22,12 +22,9 @@ for i in range(len(columns)):
     df[columns[i]]=scaler.transform(df[[columns[i]]])
 
 
-
 kmeans=KMeans(n_clusters=clusters,n_init='auto')
 predicted=kmeans.fit_predict(df[columns])
 df['cluster']=predicted+1
 
 
-
-
-df.to_csv(sys.argv[5],encoding='utf-8')
+df.to_csv(sys.argv[5],index=False,encoding='utf-8')

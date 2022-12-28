@@ -4,7 +4,6 @@ require_once '../../vendor/autoload.php';
 $method=$_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents("php://input"), true);
 
-
 if($method!= "POST") {
     header("HTTP/1.1 403 Forbidden");
     print json_encode(['errormesg'=>"Method $method not allowed here."]);
@@ -58,7 +57,7 @@ $path_parts = pathinfo($dataset);
 $folder=$path_parts['filename'];
 
 if($body['dataset-type']=='public'){
-    if(!file_exists("../python/datasets/public_datasets/$folder")){
+    if(!file_exists("../python/datasets/public_datasets/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
@@ -67,7 +66,7 @@ if($body['dataset-type']=='public'){
 }else{
     $email=getEmail($body['apikey']);
     $identity=md5($email);
-    if(!file_exists("../python/datasets/$identity/$folder")){
+    if(!file_exists("../python/datasets/$identity/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
@@ -133,14 +132,11 @@ if(!(array_intersect($columns, $numerical_columns) === $columns)){
     exit();
 }
 
-
 $clusters=$body['clusters'];
-
 
 file_put_contents("$file_path/".$folder . "_clusters_$clusters.csv", '');
 $path="$file_path/$dataset";
 $path_to_save="$file_path/" .$folder .  "_clusters_$clusters.csv";
-
 
 echo shell_exec("python ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
 $file=fopen("$path_to_save",'r');
@@ -149,7 +145,6 @@ $filerow =0;
 while (($row = fgetcsv($file, 1024, ','))&&($filerow<=99)) {
     $csv[] = array_combine($headers, $row);
     $filerow++;
-
 }
 fclose($file);
 

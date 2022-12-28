@@ -1,5 +1,4 @@
 <?php
-
 require_once '../dbconnect.php';
 require '../globalContext.php';
 require_once '../../vendor/autoload.php';
@@ -47,7 +46,7 @@ $ext = pathinfo($_GET['dataset'], PATHINFO_EXTENSION);
 $dataset=basename($_GET['dataset']);
 
 if($_GET['dataset-type']=='public'){
-    if(!file_exists("../python/datasets/public_datasets/$folder")){
+    if(!file_exists("../python/datasets/public_datasets/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
@@ -56,7 +55,7 @@ if($_GET['dataset-type']=='public'){
 }else{
     $email=getEmail($_GET['apikey']);
     $identity=md5($email);
-    if(!file_exists("../python/datasets/$identity/$folder")){
+    if(!file_exists("../python/datasets/$identity/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
@@ -106,6 +105,5 @@ foreach($headers_ as $value_){
 }
 
 print json_encode(["items"=>$full_csv,"numerical_columns"=>$numerical_columns],JSON_UNESCAPED_UNICODE);
-
 
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 require_once '../dbconnect.php';
 require '../phpmailer.php';
 require '../config.php';
@@ -44,7 +43,6 @@ $lname=$body['lname'];
 $api_key=bin2hex(random_bytes(16));
 $token=bin2hex(random_bytes(16));
 
-
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"invalid email."]);
@@ -76,5 +74,4 @@ if($r2[0]['c']>0){
     send_mail($email,$fname,$subject,$email_body,$alt_body);
 	print json_encode(['message'=>"user registered."]);
 
-    
 ?>

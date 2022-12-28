@@ -1,11 +1,9 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 
 $method=$_SERVER['REQUEST_METHOD'];
 require_once '../dbconnect.php';
 require '../globalContext.php';
-
 
 if($method!= "POST") {
     header("HTTP/1.1 403 Forbidden");
@@ -36,7 +34,6 @@ if(!checkApiKeyExists($_POST['apikey'])){
     print json_encode(['errormesg'=>"This Apikey does not exist."]);
     exit;
 }
-
 
 if(isset($_FILES['dataset'])){
 

@@ -8,7 +8,9 @@ import matplotlib.pyplot as plt
 
 # print(os.getcwd())
 
-df=pd.read_excel("backend/python/datasets/file_example_XLSX_100.xlsx")
+df=pd.read_excel("backend/python/datasets/fuel_prices_52.csv",index_col=0)
+# df=pd.read_csv("backend/python/datasets/fuel_prices_52.csv",index_col=0)
+# df.reset_index(drop=True)
 # print(df)
 
 columns=["Age"]

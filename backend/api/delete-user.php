@@ -1,5 +1,4 @@
 <?php
-
 require_once '../dbconnect.php';
 require '../config.php';
 require '../phpmailer.php';
@@ -26,7 +25,6 @@ if(!checkApiKeyExists($body['apikey'])){
     exit;
 }
 
-
 $sql2 = 'SELECT email,fname FROM users WHERE apiKey=?';
 $st2 = $mysqli->prepare($sql2);
 $st2->bind_param('s',$body['apikey']);
@@ -50,13 +48,10 @@ $st->bind_param('ss',$body['apikey'],$token);
 $st->execute();
 
 
-
 $email_body="copy this to your browser $domain/backend/verify_delete.php?token=$token";
 $alt_body="copy this to your browser $domain/backend/verify_delete.php?token=$token";
 $subject="Request for account deletion";
 send_mail($email,$fname,$subject,$email_body,$alt_body);
 print json_encode(['message'=>"check your email for link confirmation"]);
-
-
 
 ?>

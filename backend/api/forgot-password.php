@@ -1,5 +1,4 @@
 <?php
-
 require_once '../dbconnect.php';
 require '../config.php';
 require '../phpmailer.php';
@@ -36,15 +35,9 @@ $res = $res->fetch_assoc();
 $fname=$res['fname'];
 
 
-
-
-
-
 $email_body="copy this to your browser $domain/www/password_reset.html?token=$token";
 $alt_body="copy this to your browser $domain/www/password_reset.html?token=$token";
 $subject="Password reset";
 send_mail($body['email'],$fname,$subject,$email_body,$alt_body);
 print json_encode(['message'=>"check your email for link confirmation"]);
-
-
 ?>

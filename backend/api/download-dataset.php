@@ -1,11 +1,10 @@
 <?php
-
 require_once '../dbconnect.php';
 require '../globalContext.php';
 
-if(!isset($_GET['file'])){
+if(!isset($_GET['dataset'])){
     header("HTTP/1.1 400 Bad Request");
-    print json_encode(['errormesg'=>"filename is required"]);
+    print json_encode(['errormesg'=>"dataset is required"]);
     exit;
 }
 
@@ -33,33 +32,31 @@ if(!checkApiKeyExists($_GET['apikey'])){
     exit;
 }
 
-$filename=basename($_GET['file']);
-$path_parts = pathinfo($filename);
-$folder=$path_parts['filename'];
-
+$dataset=basename($_GET['dataset']);
+$path_parts = pathinfo($dataset);
+$folder=$path_parts['dataset'];
 
 if($_GET['dataset-type']=='public'){
-    if(!file_exists("../python/datasets/public_datasets/$folder")){
+    if(!file_exists("../python/datasets/public_datasets/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
     }
-    $file="../python/datasets/public_datasets/$folder/$filename";
+    $file="../python/datasets/public_datasets/$folder/$dataset";
 }else{
     $email=getEmail($_GET['apikey']);
     $identity=md5($email);
-    if(!file_exists("../python/datasets/$identity/$folder")){
+    if(!file_exists("../python/datasets/$identity/$folder/$dataset")){
         header("HTTP/1.1 400 Bad Request");
         print json_encode(['errormesg'=>"dataset does not exist"]);
         exit();
     }
-    $file="../python/datasets/$identity/$folder/$filename";
+    $file="../python/datasets/$identity/$folder/$dataset";
 }
-
 
     header("Cache-Control: public");
     header("Content-Description: File Transfer");
-    header('Content-Disposition: filename="'.$filename.'"');
+    header('Content-Disposition: filename="'.$dataset.'"');
     header("Content-Type:application/zip");
     header("Content-Transfer-Encoding:binary");
     readfile($file);
