@@ -20,7 +20,7 @@
                         <input type="file" name="sample_dataset"  />
                     </th>
                      <th width="50%">
-                        <a href="http://webkmeans.localhost/backend/api/download-dataset?file=fuel_prices_52.csv&dataset-type=personal&apikey=5550c5cf404cfb7ad66fd904efce3c0c">Download file</a>
+                        <a href="http://webkmeans.localhost/server/api/download-dataset?dataset=iris.csv&dataset-type=personal&apikey=da6dd6ef71c7f7640dd598a4c7adbd23">Download file</a>
                     </th>
             </tr>
             </table>
@@ -52,21 +52,19 @@
         }
         const form_data=new FormData();
         form_data.set("dataset",file);
-        form_data.set('email',"kostisgratsos@hotmail.gr");
-        form_data.set('apikey',"5550c5cf404cfb7ad66fd904efce3c0c");
+        form_data.set('apikey',"0a8366a07c0d8fccc48bab2e657f12d0");
         form_data.set("dataset-type","personal");
 
         var upload_url;
 
         
-        fetch("http://webkmeans.localhost/backend/api/upload-dataset",{
+        fetch("http://webkmeans.localhost/server/api/upload-dataset",{
             method:'POST',
             body:form_data,
         }).then(function(response){
             // console.log(response);
            return response.json()
         }).then(function(responseData){
-            console.log(JSON.stringify({error:responseData}));
             document.getElementsByName('sample_dataset')[0].value='';
         })
     }
