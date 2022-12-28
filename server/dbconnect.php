@@ -3,13 +3,13 @@ $host='127.0.0.1';
 $db = 'web_kmeans';
 $user="root";
 $pass="1234";
+require_once "config.php";
 
-// $user=$DB_USER;
-// $pass=$DB_PASS;
+
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-if(gethostname()=='users.iee.ihu.gr') {
-	$mysqli = new mysqli($host, $user, $pass, $db,null,'/home/student/it/2018/it185174/mysql/run/mysql.sock');
+if(gethostname()=='nireas.iee.ihu.gr') {
+	$mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
 } else {
         $mysqli = new mysqli($host, $user, $pass, $db);
 }
