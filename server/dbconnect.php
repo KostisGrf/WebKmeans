@@ -8,7 +8,7 @@ require_once "config.php";
 
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-if(gethostname()=='nireas.iee.ihu.gr') {
+if(gethostname()=='nireas') {
 	$mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
 } else {
         $mysqli = new mysqli($host, $user, $pass, $db);
