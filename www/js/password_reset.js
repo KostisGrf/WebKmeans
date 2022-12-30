@@ -31,7 +31,7 @@ $('#submit-form').on('click',function(){
     console.log(data);
    }
 
-    $.ajax({url: "../backend/password_reset_verify.php", 
+    $.ajax({url: "../server/password_reset_verify.php", 
     method: 'POST',
     data:JSON.stringify({token:token,password:new_password}),
     dataType:"json",

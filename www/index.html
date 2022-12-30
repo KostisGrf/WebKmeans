@@ -20,7 +20,7 @@
                         <input type="file" name="sample_dataset"  />
                     </th>
                      <th width="50%">
-                        <a href="http://webkmeans.localhost/server/api/download-dataset?dataset=iris.csv&dataset-type=personal&apikey=da6dd6ef71c7f7640dd598a4c7adbd23">Download file</a>
+                        <a href="https://nireas.iee.ihu.gr/webkmeans/server/api/download-dataset.php?dataset=fuel_prices_52_clusters_10.csv&dataset-type=personal&apikey=456b3a22b9f7f4637c45e9a7e381f518">Download file</a>
                     </th>
             </tr>
             </table>
@@ -52,13 +52,13 @@
         }
         const form_data=new FormData();
         form_data.set("dataset",file);
-        form_data.set('apikey',"0a8366a07c0d8fccc48bab2e657f12d0");
+        form_data.set('apikey',"456b3a22b9f7f4637c45e9a7e381f518");
         form_data.set("dataset-type","personal");
 
         var upload_url;
 
         
-        fetch("http://webkmeans.localhost/server/api/upload-dataset",{
+        fetch("https://nireas.iee.ihu.gr/webkmeans/server/api/upload-dataset.php",{
             method:'POST',
             body:form_data,
         }).then(function(response){
