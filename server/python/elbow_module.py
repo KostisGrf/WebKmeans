@@ -1,7 +1,10 @@
+import sys
+sys.path.insert(0,"/var/www/html/webkmeans/.local/lib/python3.10/site-packages")
+import os 
+os.environ['MPLCONFIGDIR'] = os.getcwd() + "/configs/"
 from sklearn.cluster import KMeans
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-import sys
 from kneed import KneeLocator
 import json
 import warnings

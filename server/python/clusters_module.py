@@ -1,8 +1,8 @@
+import sys
+sys.path.insert(0,"/var/www/html/webkmeans/.local/lib/python3.10/site-packages")
 from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-import sys
 import warnings
 warnings.filterwarnings('ignore')
 

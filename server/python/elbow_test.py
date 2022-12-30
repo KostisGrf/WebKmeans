@@ -2,18 +2,19 @@ from sklearn.cluster import KMeans
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import sys
+import os
 from kneed import KneeLocator
 import matplotlib.pyplot as plt
 
 
 # print(os.getcwd())
 
-df=pd.read_excel("server/python/datasets/fuel_prices_52.csv",index_col=0)
-# df=pd.read_csv("backend/python/datasets/fuel_prices_52.csv",index_col=0)
-# df.reset_index(drop=True)
-# print(df)
+# df=pd.read_excel("server/python/datasets/fuel_prices_52.csv",index_col=0)
+df=pd.read_csv("server/python/datasets/iris.csv")
+# # df.reset_index(drop=True)
+# # print(df)
 
-columns=["Age"]
+columns=["sepal.length","sepal.width"]
 
 
 scaler=MinMaxScaler()
