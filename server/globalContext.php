@@ -4,7 +4,7 @@ date_default_timezone_set('Europe/Athens');
 
 
 function checkTokenExpired($token){
-    require  'dbconnect.php';
+    global $mysqli;
 
     $sql="SELECT created_at FROM verification_tokens where token=?";
     $st = $mysqli->prepare($sql);
@@ -28,7 +28,7 @@ function checkTokenExpired($token){
 }
 
 function checkTokenExists($token){
-require  'dbconnect.php';
+global $mysqli;
 $sql='SELECT count(*) as count FROM verification_tokens WHERE token=?';
 $st = $mysqli->prepare($sql);
 $st->bind_param('s',$token);
@@ -45,7 +45,7 @@ if($res['count']>0){
 }
 
 function checkTokenByemail($email){
-    require  'dbconnect.php';
+    global $mysqli;
 
     $sql="SELECT created_at FROM verification_tokens as vt JOIN users as u on u.id=vt.userid where u.email=?";
     $st = $mysqli->prepare($sql);
@@ -72,7 +72,7 @@ function checkTokenByemail($email){
 }
 
 function getEmail($apikey){
-        require  'dbconnect.php';
+        global $mysqli;
         $sql = 'SELECT email FROM users WHERE apiKey=?';
         $st = $mysqli->prepare($sql);
         $st->bind_param('s',$apikey);
@@ -84,7 +84,7 @@ function getEmail($apikey){
 }
 
 function checkApiKeyExists($apikey){
-    require  'dbconnect.php';
+    global $mysqli;
     $sql='SELECT count(*) as count FROM users WHERE apiKey=?';
     $st = $mysqli->prepare($sql);
     $st->bind_param('s',$apikey);
@@ -99,6 +99,15 @@ function rrmdir($directory)
 {
     array_map(fn (string $file) => is_dir($file) ? rrmdir($file) : unlink($file), glob($directory . '/' . '*'));
     return rmdir($directory);
+}
+
+function getdomain(){
+    if(gethostname()=='nireas'){
+       $domain_="https://nireas.iee.ihu.gr/webkmeans";
+    }else{
+        $domain_="webkmeans.localhost";
+    }
+    return $domain_;
 }
 
 
