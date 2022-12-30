@@ -34,7 +34,7 @@ $res = $st2->get_result();
 $res = $res->fetch_assoc();
 $fname=$res['fname'];
 
-
+$domain=getdomain();
 $email_body="copy this to your browser $domain/www/password_reset.html?token=$token";
 $alt_body="copy this to your browser $domain/www/password_reset.html?token=$token";
 $subject="Password reset";

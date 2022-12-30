@@ -1,5 +1,6 @@
 <?php
 require_once '../dbconnect.php';
+require '../globalContext.php';
 require '../phpmailer.php';
 require '../config.php';
 
@@ -68,6 +69,8 @@ if($r2[0]['c']>0){
 	$st->execute();
 	$identity=md5($email);
 	mkdir("../python/datasets/$identity");
+
+    $domain=getdomain();
     $email_body="copy this to your browser $domain/server/verify_email.php?token=$token";
     $alt_body="copy this to your browser $domain/server/verify_email.php?token=$token";
     $subject="WebKmeans Account confirmation";

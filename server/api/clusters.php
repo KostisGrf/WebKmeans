@@ -1,4 +1,5 @@
 <?php
+require_once '../dbconnect.php';
 require '../globalContext.php';
 require_once '../../vendor/autoload.php';
 $method=$_SERVER['REQUEST_METHOD'];
@@ -138,7 +139,8 @@ file_put_contents("$file_path/".$folder . "_clusters_$clusters.csv", '');
 $path="$file_path/$dataset";
 $path_to_save="$file_path/" .$folder .  "_clusters_$clusters.csv";
 
-echo shell_exec("python ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
+
+echo shell_exec("python3 ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
 $file=fopen("$path_to_save",'r');
 $headers = fgetcsv($file, 1024, ',');
 $filerow =0;

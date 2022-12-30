@@ -51,7 +51,7 @@ if(!$r[0]['verified']){
     $check_password = password_verify($passwd, $res['password']);
 }else{
         header("HTTP/1.1 400 Bad Request");
-	    print json_encode(['errormesg'=>"Wrong username/password."]);
+	    print json_encode(['errormesg'=>"Wrong username/password."],JSON_UNESCAPED_SLASHES);
         exit;
 }
 
@@ -63,7 +63,7 @@ if($check_password){
     print json_encode($data, JSON_PRETTY_PRINT);
 }else{
     header("HTTP/1.1 400 Bad Request");
-	print json_encode(['errormesg'=>"Wrong username/password."]);
+	print json_encode(['errormesg'=>"Wrong username/password."],JSON_UNESCAPED_SLASHES);
 }
 
 ?>

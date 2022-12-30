@@ -1,6 +1,5 @@
 <?php
 require_once '../dbconnect.php';
-require '../config.php';
 require '../phpmailer.php';
 require '../globalContext.php';
 
@@ -47,7 +46,7 @@ $st = $mysqli->prepare($sql);
 $st->bind_param('ss',$body['apikey'],$token);
 $st->execute();
 
-
+$domain=getdomain();
 $email_body="copy this to your browser $domain/server/verify_delete.php?token=$token";
 $alt_body="copy this to your browser $domain/server/verify_delete.php?token=$token";
 $subject="Request for account deletion";
