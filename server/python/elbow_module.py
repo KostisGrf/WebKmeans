@@ -28,14 +28,14 @@ for i in range(len(columns)):
 
 sse = []
 
-for i in range(1,clusters):
+for i in range(1,clusters+1):
     kmeans = KMeans(n_clusters=i,n_init='auto')
     kmeans.fit(df[columns])
     sse.append(kmeans.inertia_)
 
 
 result=list(map(str, sse))
-kl=KneeLocator(range(1,clusters),sse,curve="convex",direction="decreasing")
+kl=KneeLocator(range(1,clusters+1),sse,curve="convex",direction="decreasing")
 
 print(json.dumps({"sse":result,"suggested-k":str(kl.elbow)}))
 
