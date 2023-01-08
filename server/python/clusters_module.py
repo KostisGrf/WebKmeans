@@ -6,7 +6,6 @@ from sklearn.preprocessing import MinMaxScaler
 import warnings
 warnings.filterwarnings('ignore')
 
-
 if (sys.argv[4]=="csv"):
     df=pd.read_csv(sys.argv[1])
 else:
