@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  
+    
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins',sans-serif;
+    height: 100vh;
+   background-color: #EEEEEE;
+}
+
+a{
+   text-decoration: none;
+}
+
+.accordion{
+    width: 85vw;
+}
+
+.docs-boxes{
+   border-radius: 14px;
+}
+
+.accordion-item{
+    
+    margin-bottom: 35px;
+    border-radius: 14px !important;
+
+   
+    
+}
+
+.accordion-item button{
+    width: 85vw;
+    background-color: #F00000;
+    /* border: 4px solid #f93e3e; */
+    border-radius: 5px;
+   
+}
+
+
+.btn-get button {
+    background-color: #5FD068 !important;
+}
+
+.btn-delete button{
+    background-color: #F00000 !important;
+}
+
+.btn-post button{
+    background-color:#485FC7 !important ;
+}
+
+
+.card{
+    font-family: monospace;
+    font-size: .895em;
+}
+
+.api-key-card{
+    width: 50vw;
+    font-family: 'Poppins',sans-serif;
+    font-size: 1em;
+}
+
+.apikey-input input{
+    width: 100%;
+    padding: 5px;
+}
+    
+
+
+/* .accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0,0,0,.125);
+    background-color: red;
+} */
+
+.box{
+    padding: 5px;
+    background-color: #F0F0F0;
+    color: black;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 15px;
+    
+
+    
+}
+
+@media (min-width:992px){
+    .navbar-brand{
+        margin-left: 140px !important;
+      }
+
+    .navbar li{
+        font-size: 17px;
+        font-weight: 400;
+    }  
+
+   
+}
+
+@media (max-width:992px){
+    .api-key-card{
+        width: 65vw;
+    }
+}
+
+@media (max-width:665px){
+    .api-key-card{
+        width: 75vw;
+    }
+}
+
+
+@media (max-width:576px){
+    .api-key-card{
+        width: 90vw;
+    }
+}
+
+
+
+@media (max-width:376px){
+    .accordion-item button{
+        width: 95vw;
+    }
+
+    .accordion{
+        width: 95vw;
+    }
+}
+
+@media (max-width:320px){
+    .accordion-item button{
+        width: 100vw;
+    }
+
+    .accordion{
+        width: 100vw;
+    }
+}
+
+

@@ -1,0 +1,262 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    /* margin: 0;
+    padding: 0; */
+    font-family: 'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+
+
+body{
+     height: 100vh;
+    background-color: #EEEEEE;
+}
+
+a{
+    text-decoration: none;
+}
+
+.sign-btn{
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    background-color:#4070f4 ;
+    transition: all ease 0.3s;
+    /* margin-left: 15px; */
+}
+
+.sign-btn:hover{
+    color: #FFFFFF;
+    background-color: #265df2;
+    cursor: pointer;
+}
+
+#gear-dropdown{
+  display: none;
+}
+
+#adv-exp{
+  display: none;
+}
+
+
+
+
+
+@media (min-width:992px){
+    .navbar-brand{
+        margin-left: 140px !important;
+      }
+
+    .navbar li{
+        font-size: 17px;
+        font-weight: 400;
+    }  
+}
+
+#hero {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding: 140px 0 100px 0;
+  }
+  
+  #hero::before {
+    content: "";
+    position: absolute;
+    right: -100%;
+    top: 25%;
+    width: 250%;
+    height: 200%;
+    z-index: -1;
+  }
+  
+  #hero h1 {
+    margin: 0 0 10px 0;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 56px;
+  }
+  
+  #hero h2 {
+    color: #515f7d;
+    margin-bottom: 50px;
+    font-size: 20px;
+  }
+  
+  #hero .download-btn {
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-block;
+    padding: 8px 24px 10px 46px;
+    border-radius: 3px;
+    transition: 0.5s;
+    color: #fff;
+    background: #47536e;
+    position: relative;
+  }
+  
+    
+  
+  @media (max-width: 992px) {
+    #hero {
+      text-align: center;
+    }
+  
+  @media (max-width: 768px) {
+    #hero h1 {
+      font-size: 28px;
+      line-height: 36px;
+    }
+  
+    #hero h2 {
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: 30px;
+    }
+  
+  }
+  
+  
+}
+
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  background-color: #f2f5fa;
+}
+
+.section-title {
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+ 
+}
+
+.section-title p {
+  margin-bottom: 0;
+}
+
+.main::after{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url("../assets/background2.png") center center;
+  opacity: .1;
+}
+
+/*--------------------------------------------------------------
+# Breadcrumbs
+--------------------------------------------------------------*/
+.breadcrumbs {
+  padding: 15px 0;
+  background-color: #f6f8fb;
+  min-height: 40px;
+}
+
+.breadcrumbs h2 {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.breadcrumbs ol li+li {
+  padding-left: 10px;
+}
+
+.breadcrumbs ol li+li::before {
+  display: inline-block;
+  padding-right: 10px;
+  color: #6c757d;
+  content: "/";
+}
+
+@media (max-width: 768px) {
+  .breadcrumbs .d-flex {
+    display: block !important;
+  }
+
+  .breadcrumbs ol {
+    display: block;
+  }
+
+  .breadcrumbs ol li {
+    display: inline-block;
+  }
+}
+
+/*--------------------------------------------------------------
+# App Features
+--------------------------------------------------------------*/
+.features .content {
+  padding: 30px 0;
+}
+
+.features .content .icon-box {
+  margin-top: 25px;
+}
+
+.features .content .icon-box h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 5px 0 10px 60px;
+}
+
+.features .content .img-right{
+  background-color: red;
+  float: right;
+}
+
+.features .content .icon-box i {
+  font-size: 48px;
+  float: left;
+  
+}
+
+.features .content .icon-box p {
+  font-size: 15px;
+  color: #979aa1;
+  margin-left: 60px;
+}
+
+@media (max-width: 991px) {
+  .features .image {
+    text-align: center;
+  }
+
+  .features .image img {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 667px) {
+  .features .image img {
+    max-width: 100%;
+  }
+}
