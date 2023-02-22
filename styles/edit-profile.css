@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  
+    font-family: 'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+   background-color: #EEEEEE;
+}
+
+a{
+   text-decoration: none;
+}
+
+.edit-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.container{
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #FFFF;
+    box-shadow: 0 5px 10px  rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.login{
+    padding: 30px;
+}
+
+
+.center-title{
+    text-align: center;
+}
+
+.center-title span{
+   
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.input-field{
+    position: relative;
+    margin-top: 30px;
+    height: 56px;
+    width:100% ;
+
+}
+
+.input-field input{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 16px;
+    transition: all ease 0.3s;
+}
+
+.input-field input:is(:focus){
+    border-bottom-color: #4070f4;
+}
+
+.input-field i{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;    
+    transition: all ease 0.3s;  
+}
+
+.input-field input:is(:focus) ~ i{
+    color: #4070f4;
+}
+
+
+.input-field i.icon{
+    left: 0;
+}
+
+.input-field i.showHide-pwd{
+    right:0;
+}
+
+.login .check-text{
+    display: flex ;
+    align-items: center;
+    justify-content: space-between !important;
+    margin-top: 25px !important;
+}
+
+.check-text .check-container{
+
+    display: flex ;
+    align-items: center;
+}
+
+.check-container input{
+    margin: 0 8px -2px 4px;
+    accent-color: #4070f4;
+}
+
+.login a{
+    text-decoration: none;
+}
+
+.login a:hover{
+    text-decoration: underline;
+}
+
+.login .signin-button,.delete-acc-button{
+    margin-top: 30px;
+}
+
+.delete-acc-button input{
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    background-color:red ;
+    transition: all ease 0.3s;
+}
+
+.delete-acc-button input:hover{
+    background-color:#b30000;
+}
+.delete-acc-button input:disabled,
+.delete-acc-button input[disabled]{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+#loading-spinner-small{
+    display: none;
+}
+
+.error-message{
+    display: none;
+    margin-top: 10px;
+    color: red !important;
+    font-size: 14px;
+}
+
+
+.login .signin-button input{
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    background-color:#4070f4 ;
+    transition: all ease 0.3s;
+}
+
+.login .signin-button input:disabled,
+.login .signin-button input[disabled]{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.signin-button input:hover{
+    background-color: #265df2;
+    cursor: pointer;
+}
+
+.login .signup{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.login .error-message{
+    display: none;
+    margin-top: 10px;
+    color: red !important;
+    font-size: 14px;
+}
+
+.login .error-message-big{
+    display: none;
+    margin-top: 10px;
+    color: red;
+    font-size: 17px;
+}
+
+#loading-spinner{
+    display: none;
+}
+
+#loading-spinner-small{
+    display: none;
+}
+
+@media (min-width:992px){
+    .navbar-brand{
+        margin-left: 140px !important;
+      }
+
+    .navbar li{
+        font-size: 17px;
+        font-weight: 400;
+    }  
+}

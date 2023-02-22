@@ -1,4 +1,5 @@
 <?php
+require_once '../dbconnect.php';
 require '../globalContext.php';
 require_once '../../vendor/autoload.php';
 $method=$_SERVER['REQUEST_METHOD'];
@@ -50,6 +51,18 @@ if(!checkApiKeyExists($body['apikey'])){
     header("HTTP/1.1 401 Unauthorized");
     print json_encode(['errormesg'=>"This Apikey does not exist."]);
     exit;
+}
+
+if($body['clusters']<4){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"number of clusters must be greater than 3 for the elbow method"]);
+    exit();
+}
+
+if($body['clusters']>100){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"The maximum number of clusters is 100"]);
+    exit();
 }
 
 $clusters=$body['clusters'];
@@ -112,6 +125,21 @@ if($ext=="csv"){
     }
 }
 
+
+
+if($body['clusters']>count($full_csv)){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"The number of clusters must be less than or equal to the number of rows of the dataset"]);
+    exit();
+}
+
+
+for($i=0;$i<=count($full_csv);$i++){
+    if($headers_[0]==0||$headers_[0]==1){
+        unset($full_csv[$i][$headers_[0]]);
+    }
+}
+
 if($headers_[0]==0||$headers_[0]==1){
     array_shift($headers_);
 }
@@ -138,7 +166,7 @@ if(!(array_intersect($columns, $numerical_columns) === $columns)){
 
 $path="$file_path/$dataset";
 
-$output=shell_exec("python ../python/elbow_module.py $path $colums_string $clusters $ext  2>&1");
+$output=shell_exec("python3 ../python/elbow_module.py $path $colums_string $clusters $ext  2>&1");
 echo ($output);
 
 ?>

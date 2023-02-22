@@ -1,4 +1,9 @@
 <?php
+// header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+// header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+error_reporting(0);
+
 require_once '../dbconnect.php';
 require '../globalContext.php';
 require '../phpmailer.php';
@@ -71,8 +76,8 @@ if($r2[0]['c']>0){
 	mkdir("../python/datasets/$identity");
 
     $domain=getdomain();
-    $email_body="copy this to your browser $domain/server/verify_email.php?token=$token";
-    $alt_body="copy this to your browser $domain/server/verify_email.php?token=$token";
+    $email_body="copy this to your browser $domain/verify-account.html?token=$token";
+    $alt_body="copy this to your browser $domain/verify-account.html?token=$token";
     $subject="WebKmeans Account confirmation";
     send_mail($email,$fname,$subject,$email_body,$alt_body);
 	print json_encode(['message'=>"user registered."]);

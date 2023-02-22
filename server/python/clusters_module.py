@@ -6,7 +6,6 @@ from sklearn.preprocessing import MinMaxScaler
 import warnings
 warnings.filterwarnings('ignore')
 
-
 if (sys.argv[4]=="csv"):
     df=pd.read_csv(sys.argv[1])
 else:
@@ -28,5 +27,6 @@ kmeans=KMeans(n_clusters=clusters,n_init='auto')
 predicted=kmeans.fit_predict(df[columns])
 df1['cluster']=predicted+1
 
+columns.append('cluster');
 
-df1.to_csv(sys.argv[5],index=False,encoding='utf-8')
+df1[columns].to_csv(sys.argv[5],index=False,encoding='utf-8')
