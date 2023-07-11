@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,"/var/www/html/webkmeans/.local/lib/python3.10/site-packages")
+sys.path.insert(0,"/var/www/html/webkmeans/server/api/.venv/lib/python3.11/site-packages")
 from sklearn.cluster import KMeans
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
@@ -28,5 +28,6 @@ kmeans=KMeans(n_clusters=clusters,n_init='auto')
 predicted=kmeans.fit_predict(df[columns])
 df1['cluster']=predicted+1
 
+columns.append('cluster');
 
-df1.to_csv(sys.argv[5],index=False,encoding='utf-8')
+df1[columns].to_csv(sys.argv[5],index=False,encoding='utf-8')
