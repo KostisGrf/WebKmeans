@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+
+body{
+    height: 100vh;
+    background-color: #EEEEEE;
+}
+
+.main{
+    margin-left: 20vw;
+}
+
+ .main .files-title{
+    margin-top:5vh;
+}
+
+.main .files-title h3{ 
+    margin-top:5vh;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+.card{
+    width: 60vw;
+    margin-bottom: 15px;
+}
+
+button:disabled,
+button[disabled],
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
+a{
+    text-decoration: none;
+}
+
+.elbow-chart{
+    display: none;
+    width: 40vw ;
+    
+}
+
+.file-choose button,.file-choose a,.btn-blue{
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    background-color:#4070f4 ;
+    transition: all ease 0.3s;
+}
+
+
+
+.file-choose button:hover,.file-choose a:hover,.btn-blue:hover{
+    background-color: #0b5ed7;
+    cursor: pointer;
+    color:white;
+}
+
+#download-clusters-btn{
+    display: none;
+}
+
+#show-plot-btn{
+    display: none;
+}
+
+#plotModal{
+    margin: 0 auto;
+}
+
+#download-graph-btn{
+    display: none;
+}
+
+.imgbox {
+    display: grid;
+    height: 100%;
+}
+.center-fit {
+    width: 95%;
+    margin: auto;
+}
+
+#gear-dropdown{
+    display: none;
+}
+
+.card .delete-btn{
+    background-color:#ff3333 !important;
+    transition: all ease 0.2s;
+}
+
+.card .delete-btn:hover{
+    background-color:#b30000 !important;
+}
+
+
+.clusters-card{
+    display: none;
+}
+
+
+#public{
+    background-color: #e6ffe6;
+}
+
+@media (max-width: 1400px) {
+    .elbow-chart{
+        width: 50vw ;
+        
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .card{
+        width: 75vw;
+        
+    }
+    
+    .file-choose button{
+        font-size: 15px;
+    }
+    .file-choose a{
+        font-size: 15px;
+    }
+    .main .files-title h3{ 
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .file-choose button{
+        font-size: 14px;
+    }
+
+   .file-choose a{
+        font-size: 14px;
+    }
+    .elbow-chart{
+        width: 65vw ;
+        
+    }
+}
+
+@media (max-width: 768px) {
+
+    .main{
+        margin-left: 0;
+        padding: 5px;
+    }
+
+    .card{
+        width: 100%;
+    }
+    
+    .file-choose button{
+        font-size: 15px;
+    }
+    .file-choose a{
+        font-size: 15px;
+    }
+
+    .main .files-title h3{ 
+        font-size: 18px;
+    }
+
+    
+}
+
+@media (max-width: 576px) {
+    .card .delete-btn{
+        margin-top: 35px;
+    }
+
+   .file-choose button{
+        font-size: 12px;
+    }
+   .file-choose a{
+        font-size: 12px;
+    }
+
+    .choose-file-button{
+        position: relative;
+        display: inline-block;
+        margin-bottom: 30px;
+        font-size: 2px;
+      }
+}
+
+
+@media (max-width: 406px) {
+    
+    .file-choose button{
+        font-size: 10px;
+    }
+    .file-choose a{
+        font-size: 10px;
+    }
+    .elbow-chart{
+        width: 100vw ;
+        
+    }
+}
+
+
+.file-drop-area {
+    position: relative;
+    border: 1px dashed #4070f4;
+    border-radius: 3px;
+    transition: 0.2s;
+    padding: 55px;
+    /* cursor: pointer; */
+  }
+
+  .file-drop-area i{
+    font-size: 30px;
+    color: #4070f4;
+    
+  }
+  
+  .choose-file-button {
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    padding: 8px 15px;
+    margin-right: 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+    background-color: #4070f4;
+  }
+  
+  .file-message {
+    font-size: small;
+    font-weight: 300;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .file-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    opacity: 0;
+    
+  }
+
+  .error-message-big{
+    display: none;
+    margin-top: 10px;
+    color: red;
+    font-size: 17px;
+}
+
+#loading-spinner-upload{
+    display: none;
+}
+
+#loading-spinner-table{
+  display: none;
+   
+    
+}
+
+.fixed-table-body{
+    max-height: 51vh;
+    overflow: auto; 
+}
+
+@media (min-width:992px){
+    .navbar-brand{
+        margin-left: 140px !important;
+      }
+    }
+
+.success-message-big{
+    display: none;
+    margin-top: 10px;
+    color: green;
+    font-size: 17px;
+}
+
+.error-message{
+    display: none;
+    margin-top: 10px;
+    color: red;
+    font-size: 17px;
+    float: left;
+}
+
+.cont-dataset-table{
+    display: none;
+    
+}
+
+.cont-clusters-table{
+    display: none;
+    
+}
+
+.initialize-elbow{
+    display: none;
+}
+
+
+.hint-text{
+    color: #A9A9A9;
+    font-size: 14px;
+}
+
+.error-elbow{
+    display: none;
+    color: red;
+    font-size: 14px;
+}
+ 
+#loading-spinner-elbow{
+    display: none;
+}
+
+.error-columns{
+    display: none;
+    color: red;
+}
+
+
+.chart{
+    height: 100px;
+}
+
+.error-assigment{
+    display: none;
+    color: red;
+}
+
+#loading-spinner-assigment{
+    display: none;
+}
+
+.card-title{
+    font-size: 23px;
+    font-weight: 400;
+}
+
