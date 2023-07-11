@@ -1,5 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+ini_set('upload_max_filesize', '1M');
 
 $method=$_SERVER['REQUEST_METHOD'];
 require_once '../dbconnect.php';

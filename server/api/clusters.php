@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors", "1");
+ini_set('memory_limit', '1024M');
 require_once '../dbconnect.php';
 require '../globalContext.php';
 require_once '../../vendor/autoload.php';
@@ -51,6 +53,12 @@ if(!checkApiKeyExists($body['apikey'])){
     header("HTTP/1.1 401 Unauthorized");
     print json_encode(['errormesg'=>"This Apikey does not exist."]);
     exit;
+}
+
+if($body['clusters']>100){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"The maximum number of clusters is 100"]);
+    exit();
 }
 
 $dataset=basename($body['dataset']);
@@ -112,6 +120,22 @@ if($ext=="csv"){
     }
 }
 
+if($body['clusters']>count($full_csv)){
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"The number of clusters must be less than or equal to the number of rows of the dataset"]);
+    exit();
+}
+
+for($i=0;$i<=count($full_csv);$i++){
+    if($headers_[0]==0||$headers_[0]==1){
+        unset($full_csv[$i][$headers_[0]]);
+    }
+}
+
+if($headers_[0]==0||$headers_[0]==1){
+    array_shift($headers_);
+}
+
 
 if((empty($columns))||!(array_intersect($columns, $headers_) === $columns)){
     header("HTTP/1.1 400 Bad Request");
@@ -140,14 +164,20 @@ $path="$file_path/$dataset";
 $path_to_save="$file_path/" .$folder .  "_clusters_$clusters.csv";
 
 
-echo shell_exec("python3 ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
+echo shell_exec("python ../python/clusters_module.py $path $colums_string $clusters $ext $path_to_save  2>&1");
 $file=fopen("$path_to_save",'r');
 $headers = fgetcsv($file, 1024, ',');
 $filerow =0;
-while (($row = fgetcsv($file, 1024, ','))&&($filerow<=99)) {
+while (($row = fgetcsv($file, 1024, ','))) {
     $csv[] = array_combine($headers, $row);
     $filerow++;
 }
 fclose($file);
+for($i=0;$i<=count($csv);$i++){
+    if($headers[0]==0||$headers[0]==1){
+        unset($csv[$i][$headers[0]]);
+    }
+}
+
 
 print json_encode(["items"=>$csv],JSON_UNESCAPED_UNICODE);

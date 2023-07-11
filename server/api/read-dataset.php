@@ -79,6 +79,7 @@ if($ext=="csv"){
         $filerow++;
     }
     fclose($file);
+    
 }else{
     $reader = $ext=="xls" ? new \PhpOffice\PhpSpreadsheet\Reader\Xls()
                           : new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
@@ -96,6 +97,17 @@ if($ext=="csv"){
         $full_csv[]=array_combine($headers_,$data[$i]);
     }
 }
+
+for($i=0;$i<=count($full_csv);$i++){
+    if($headers_[0]==0||$headers_[0]==1){
+        unset($full_csv[$i][$headers_[0]]);
+    }
+}
+
+if($headers_[0]==0||$headers_[0]==1){
+    array_shift($headers_);
+}
+
 
 $numerical_columns=[];
 foreach($headers_ as $value_){

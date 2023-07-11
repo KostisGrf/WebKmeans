@@ -47,8 +47,8 @@ $st->bind_param('ss',$body['apikey'],$token);
 $st->execute();
 
 $domain=getdomain();
-$email_body="copy this to your browser $domain/server/verify_delete.php?token=$token";
-$alt_body="copy this to your browser $domain/server/verify_delete.php?token=$token";
+$email_body="click <a href='$domain/verify-account-deletion.html?token=$token'>here</a> or paste this link to your browser $domain/verify-account-deletion.html?token=$token";
+$alt_body="paste this link to your browser $domain/verify-account-deletion.html?token=$token";
 $subject="Request for account deletion";
 send_mail($email,$fname,$subject,$email_body,$alt_body);
 print json_encode(['message'=>"check your email for link confirmation"]);

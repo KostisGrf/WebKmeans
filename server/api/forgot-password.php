@@ -21,6 +21,20 @@ if(checkTokenByemail($body['email'])){
 
 $token=bin2hex(random_bytes(16));
 
+$email=$body['email'];
+$sql3='SELECT count(*) as c FROM users WHERE email=?';
+$st3 = $mysqli->prepare($sql3);
+$st3->bind_param('s',$email);
+$st3->execute();
+$res3 = $st3->get_result();
+$r3 = $res3->fetch_all(MYSQLI_ASSOC);
+
+if($r3[0]['c']==0){
+	header("HTTP/1.1 400 Bad Request");
+	print json_encode(['errormesg'=>"You are not registered!"]);
+	exit;
+}
+
 $sql = 'call forgotPassword(?,?)';
 $st = $mysqli->prepare($sql);
 $st->bind_param('ss',$body['email'],$token);
@@ -35,8 +49,8 @@ $res = $res->fetch_assoc();
 $fname=$res['fname'];
 
 $domain=getdomain();
-$email_body="copy this to your browser $domain/www/password_reset.html?token=$token";
-$alt_body="copy this to your browser $domain/www/password_reset.html?token=$token";
+$email_body="click <a href='$domain/password-reset.html?token=$token'>here</a> or paste this link to your browser $domain/password-reset.html?token=$token";
+$alt_body="paste this link to your browser $domain/password-reset.html?token=$token";
 $subject="Password reset";
 send_mail($body['email'],$fname,$subject,$email_body,$alt_body);
 print json_encode(['message'=>"check your email for link confirmation"]);
