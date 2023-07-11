@@ -54,11 +54,15 @@ $('#user-name').text(sessionStorage.getItem("fname") + " " +sessionStorage.getIt
         $('.error-assigment').hide();
         $('#loading-spinner-assigment').hide();
         $('#download-clusters-btn').hide();
+<<<<<<< HEAD
         $('#show-plot-btn').hide();
         $('#assigment-clusters').val("");
         $('#loading-spinner-plot').show();
         $('.imgbox').remove();
         $('#download-graph-btn').hide();
+=======
+        $('#assigment-clusters').val("");
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 
         let id = $('#select-dataset :selected').attr("id");
         if(id==="default-option"){
@@ -106,7 +110,11 @@ $('#user-name').text(sessionStorage.getItem("fname") + " " +sessionStorage.getIt
        console.log(numerical_cols);
        $.each(numerical_cols,(i,element)=>{
         $('.column-options').append(`<div class="form-check form-check-inline numerical-col-check">
+<<<<<<< HEAD
         <input class="form-check-input" type="checkbox" name="numerical-col" value=${element} checked>
+=======
+        <input class="form-check-input" type="checkbox" name="numerical-col" value=${element}>
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
         <label class="form-check-label" for="inlineCheckbox1">${element}</label>
       </div>`)
        })
@@ -368,10 +376,13 @@ $('.elbow-chart').show();
     $('#error-text-columns').text("");
     $('.error-columns').hide();
     $('#download-clusters-btn').hide();
+<<<<<<< HEAD
     $('#show-plot-btn').hide();
     $('#loading-spinner-plot').show();
     $('.imgbox').remove();
     $('#download-graph-btn').hide();
+=======
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 
     let clusters=$('#assigment-clusters').val();
 
@@ -427,7 +438,10 @@ $('.elbow-chart').show();
       $('.cont-clusters-table').append(table);
       $('.cont-clusters-table').show();
       $('#download-clusters-btn').show();
+<<<<<<< HEAD
       $('#show-plot-btn').show();
+=======
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
       keys=Object.keys(data.items[0]);
       $.each(keys,(i,key)=>{
        $('#clusters-table>thead>tr').append(`<th data-field=${key}>${key}</th>`)
@@ -461,6 +475,7 @@ $('.elbow-chart').show();
   window.location.href = `./server/api/download-dataset.php?dataset=${filename}_clusters_${clusters}.csv&dataset-type=${type}&apikey=${apikey}`;
 })
 
+<<<<<<< HEAD
 
 var plotGraphImage;
 $('#show-plot-btn').click(()=>{
@@ -515,11 +530,14 @@ $('#show-plot-btn').click(()=>{
 
 })
 
+=======
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 $('#sign-out-btn').click(()=>{
   sessionStorage.clear();
   window.location.href = "./";
 })
 
+<<<<<<< HEAD
 var $plotModal = $('#plotModal');
 $plotModal.find('.modal-content')
   .css({
@@ -540,6 +558,10 @@ $plotModal.find('.modal-content')
 
 
 });
+=======
+
+})
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 
         
 

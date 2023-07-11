@@ -77,7 +77,11 @@ showHidePwd.click(function(){
         $('#error-text-password').text("");
         $('.error-password').hide();
 
+<<<<<<< HEAD
         const passval=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+=======
+        const passval=/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$/;
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
         if(!(pwd.match(passval))){
             $('#error-text-password').text("Your password length must be at least 8,contain at least one uppercase and one digit");
             $('.error-password').show();
@@ -148,14 +152,20 @@ showHidePwd.click(function(){
         $('#save-form').prop('disabled', true);
         $('#delete-acc-form').prop('disabled',true);
         $('#loading-spinner').show();
+<<<<<<< HEAD
         let email=sessionStorage.getItem("email");
+=======
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
         $.ajax({url: "./server/api/delete-user.php", 
     method: 'DELETE',
     data:JSON.stringify({apikey:apikey}),
     contentType: 'application/json',
     success: function() {
         $('#loading-spinner').hide();
+<<<<<<< HEAD
         $('#email-to').text(email);
+=======
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
         $('#delete-acc-modal').modal('show');
         },
     error:function(xhr, status, error) {

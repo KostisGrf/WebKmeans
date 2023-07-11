@@ -76,8 +76,13 @@ if($r2[0]['c']>0){
 	mkdir("../python/datasets/$identity");
 
     $domain=getdomain();
+<<<<<<< HEAD
     $email_body="click <a href='$domain/verify-account.html?token=$token'>here</a> or paste this to your browser $domain/verify-account.html?token=$token";
     $alt_body="paste this to your browser $domain/verify-account.html?token=$token";
+=======
+    $email_body="copy this to your browser $domain/verify-account.html?token=$token";
+    $alt_body="copy this to your browser $domain/verify-account.html?token=$token";
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
     $subject="WebKmeans Account confirmation";
     send_mail($email,$fname,$subject,$email_body,$alt_body);
 	print json_encode(['message'=>"user registered."]);

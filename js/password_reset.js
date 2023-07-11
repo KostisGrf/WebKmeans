@@ -37,7 +37,11 @@ $(function(){
             $('#error-text-password').text("");
             $('.error-password').hide();
             
+<<<<<<< HEAD
         const passval=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+=======
+        const passval=/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$/;
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
         if(!(pwd.match(passval))){
             $('#error-text-password').text("Your password length must be at least 8,contain at least one uppercase and one digit");
             $('.error-password').show();

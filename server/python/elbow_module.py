@@ -15,7 +15,6 @@ if (sys.argv[4]=="csv"):
 else:
     df=pd.read_excel(sys.argv[1])
 
-
 columns=sys.argv[2].split(',')
 clusters=int(sys.argv[3])
 

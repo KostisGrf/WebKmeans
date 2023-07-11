@@ -76,6 +76,7 @@ a{
     display: none;
 }
 
+<<<<<<< HEAD
 #show-plot-btn{
     display: none;
 }
@@ -97,6 +98,8 @@ a{
     margin: auto;
 }
 
+=======
+>>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 #gear-dropdown{
     display: none;
 }
