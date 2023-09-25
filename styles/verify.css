@@ -13,3 +13,24 @@ body{
 .card{
     width: 55vw;
 }
+
+#loading-spinner{
+    display: none;
+   
+}
+
+
+#loading-spinner-small{
+    display: none;
+}
+
+.error-message{
+    display: none;
+    margin-top: 10px;
+    color: red !important;
+    font-size: 14px;
+}
+
+#email-dialog{
+    display: none;
+}

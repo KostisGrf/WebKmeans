@@ -71,25 +71,34 @@ a{
     cursor: pointer;
     color:white;
 }
+select{
+    margin-bottom: 40px;
+}
+
+.algorithm-label{
+    display: block;
+    font-size: 17px;
+    text-align: left;
+}
 
 #download-clusters-btn{
     display: none;
 }
 
-<<<<<<< HEAD
 #show-plot-btn{
     display: none;
 }
 
-#plotModal{
+#plotModal,#plotModal2{
     margin: 0 auto;
 }
+
 
 #download-graph-btn{
     display: none;
 }
 
-.imgbox {
+.imgbox,.imgbox2 {
     display: grid;
     height: 100%;
 }
@@ -98,8 +107,6 @@ a{
     margin: auto;
 }
 
-=======
->>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 #gear-dropdown{
     display: none;
 }
@@ -122,6 +129,12 @@ a{
 #public{
     background-color: #e6ffe6;
 }
+
+@media (max-width: 768px) {
+    .modal-dialog {
+      width: 100%;    
+      margin: 30px auto;
+    }}
 
 @media (max-width: 1400px) {
     .elbow-chart{
@@ -206,6 +219,8 @@ a{
         font-size: 2px;
       }
 }
+
+
 
 
 @media (max-width: 406px) {
@@ -341,6 +356,11 @@ a{
  
 #loading-spinner-elbow{
     display: none;
+}
+
+#sample-hint-error{
+    display: none;
+    margin-top: 10px;
 }
 
 .error-columns{

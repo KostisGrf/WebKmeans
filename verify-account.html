@@ -19,6 +19,36 @@
     <div class="card text-center mt-5 p-2">
         <h3>Web K-means</h3>
         <div class="card-body">
+              <div class="modal-dialog modal-dialog-centered" id="email-dialog" role="document">
+                <div class="modal-content text-center">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Email confirmation</h5>
+                  </div>
+                  <div class="modal-body">
+                      <img src="https://static.hsappstatic.net/EmailNotificationSharedAssets/ex/email-forwarding.png" alt="">
+                      <p class="card-text">We've sent email to <span id="email-to"></span> to confirm the validity of your email address. 
+                    After receiving the email follow the link provided to complete your registration 
+                    </p>
+                    <hr>
+                    <div id="resend-email-text2">If you don't see the email in your inbox, please check your spam folder or <a href="#" id="resend-link2">Resend confirmation email</a></div>
+                    
+                    <div class="text-center spinner-border spinner-border-sm  text-primary mb-1" role="status" id="loading-spinner-small">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <p>
+                      <div class="error-message error-resendemail2">
+                          <i class="fa-solid fa-triangle-exclamation"></i>
+                          <span id="error-text-resendemail2"></span>
+                      </div>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="./login.html" class="btn btn-primary">Login</a>
+                  </div>
+                </div>
+              </div>
+
+
         </div>
       </div>
     </div>
