@@ -15,11 +15,6 @@ function checkTokenExpired($token){
     $created_at=$res['created_at'];
 
     if(strtotime($created_at) < strtotime("-20 minutes")) {
-        
-        $sql2="DELETE FROM verification_tokens where token=?";
-        $st2 = $mysqli->prepare($sql2);
-        $st2->bind_param('s',$token);
-        $st2->execute();
         return true;
     }else{
         return false;

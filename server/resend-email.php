@@ -12,11 +12,7 @@ if($method!= "GET") {
     exit;
 }
 
-if(!isset($_GET['email'])){
-    header("HTTP/1.1 400 Bad Request");
-    print json_encode(['errormesg'=>"email is required"]);
-    exit;
-}
+
 
 if(!isset($_GET['type'])){
     header("HTTP/1.1 400 Bad Request");
@@ -24,21 +20,53 @@ if(!isset($_GET['type'])){
     exit;
 }
 
-$email=$_GET['email'];
+
 $type=$_GET['type'];
 
-$sql4='SELECT count(*) as c FROM users WHERE email=?';
-$st4 = $mysqli->prepare($sql4);
-$st4->bind_param('s',$email);
-$st4->execute();
-$res4 = $st4->get_result();
-$r4 = $res4->fetch_all(MYSQLI_ASSOC);
+if($type=="regenerate-token"){
+    if(!isset($_GET['token'])){
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"token is required"]);
+        exit;
+    }
+    if(!checkTokenExists($_GET['token'])){
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"Token does not exist."]);
+        exit;
+    }
+    $old_token=$_GET['token']; 
+    $sql5='SELECT email from users as u JOIN verification_tokens as vt on u.id=vt.userid where vt.token=?';
+    $st5 = $mysqli->prepare($sql5);
+    $st5->bind_param('s',$old_token);
+    $st5->execute();
+    $res5 = $st5->get_result();
+    $r5 = $res5->fetch_assoc();
+    $email=$r5['email']; 
+}else{
+    if(!isset($_GET['email'])){
+        header("HTTP/1.1 400 Bad Request");
+        print json_encode(['errormesg'=>"email is required"]);
+        exit;
+    }
+    $email=$_GET['email'];
+    $sql4='SELECT count(*) as c FROM users WHERE email=?';
+    $st4 = $mysqli->prepare($sql4);
+    $st4->bind_param('s',$email);
+    $st4->execute();
+    $res4 = $st4->get_result();
+    $r4 = $res4->fetch_all(MYSQLI_ASSOC);
 
-if($r4[0]['c']==0){
-	header("HTTP/1.1 400 Bad Request");
-	print json_encode(['errormesg'=>"You are not registered!"]);
-	exit;
+    if($r4[0]['c']==0){
+	    header("HTTP/1.1 400 Bad Request");
+	    print json_encode(['errormesg'=>"You are not registered!"]);
+	    exit;
 }
+
+
+}
+
+
+
 
 $token=bin2hex(random_bytes(16));
 
@@ -68,26 +96,34 @@ $sql="SELECT created_at FROM verification_tokens as vt JOIN users as u on u.id=v
     }
 
     $fname = substr($email, 0, strpos($email, '@'));
-    $domain=getdomain();
-    if($type=="email-verification"){
-        $email_body="copy this to your browser $domain/verify-account.html?token=$token";
+    $domain = $_SERVER['HTTP_HOST'];
+    if($type=="email-verification" || $type == "regenerate-token"){
+        $email_body="click <a href='$domain/verify-account.html?token=$token'>here</a> or paste this to your browser $domain/verify-account.html?token=$token";
         $alt_body="copy this to your browser $domain/verify-account.html?token=$token";
         $subject="WebKmeans Account confirmation";
     }elseif($type=="forgot-password"){
-        $email_body="copy this to your browser $domain/password-reset.html?token=$token";
+        $email_body="click <a href='$domain/password-reset.html?token=$token'>here</a> or paste this to your browser $domain/password-reset.html?token=$token";
         $alt_body="copy this to your browser $domain/password-reset.html?token=$token";
         $subject="Password reset";
     }elseif($type=="delete-user"){
-        $email_body="copy this to your browser $domain/verify-account-deletion.html?token=$token";
+        $email_body="click <a href='$domain/verify-account-deletion.html?token=$token'>here</a> or paste this to your browser $domain/verify-account-deletion.html?token=$token";
         $alt_body="copy this to your browser $domain/verify-account-deletion.html?token=$token";
         $subject="Request for account deletion";
     }else{
         exit;
     }
 
-   
     send_mail($email,$fname,$subject,$email_body,$alt_body);
-	print json_encode(['message'=>"email has been sent"]);
+
+    if($type=="regenerate-token"){
+        print json_encode(array(
+            'message' => "email has been sent",
+            'email' => $email
+        ));
+    }else{
+        print json_encode(['message'=>"email has been sent"]);
+    }
+	
 
 
 ?>

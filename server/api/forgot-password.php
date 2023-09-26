@@ -48,14 +48,9 @@ $res = $st2->get_result();
 $res = $res->fetch_assoc();
 $fname=$res['fname'];
 
-$domain=getdomain();
-<<<<<<< HEAD
+$domain = $_SERVER['HTTP_HOST'];
 $email_body="click <a href='$domain/password-reset.html?token=$token'>here</a> or paste this link to your browser $domain/password-reset.html?token=$token";
 $alt_body="paste this link to your browser $domain/password-reset.html?token=$token";
-=======
-$email_body="copy this to your browser $domain/www/password-reset.html?token=$token";
-$alt_body="copy this to your browser $domain/www/password-reset.html?token=$token";
->>>>>>> 549c676594f3b31b1fbceaece92a9e19c635fc8f
 $subject="Password reset";
 send_mail($body['email'],$fname,$subject,$email_body,$alt_body);
 print json_encode(['message'=>"check your email for link confirmation"]);
