@@ -202,4 +202,12 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+CREATE  PROCEDURE `create_token`(email1 VARCHAR(45),token1 varchar(100))
+BEGIN
+DECLARE useridd BIGINT;
+SET useridd=(SELECT id FROM users WHERE email=email1 LIMIT 1);
+DELETE FROM verification_tokens WHERE userid=useridd;
+INSERT INTO verification_tokens(userid,token) VALUES (useridd,token1);
+END
+
 -- Dump completed on 2022-12-28  1:32:08
