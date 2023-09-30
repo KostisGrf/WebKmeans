@@ -19,7 +19,8 @@ columns=sys.argv[2].split(',')
 
 clusters=int(sys.argv[3])
 
-parallel_coordinates(df,'cluster')
+columns.append('cluster');
+parallel_coordinates(df[columns],'cluster')
 
 fig = plt.gcf()
 if(len(columns)<=20):
