@@ -1,9 +1,19 @@
 # WebKmeans
-This is my Thesis for International Hellenic University for the Department of Information and Electronic Engineering
+This is my thesis for the International Hellenic University, Department of Information and Electronic Engineering.
 
-Live page : https://nireas.iee.ihu.gr/webkmeans/
+🧪 **Live Demo – Web K-Means**: [https://webkmeans.iee.ihu.gr/](https://webkmeans.iee.ihu.gr/)
 
-Web K-means is a web application that can help you specify the k value of k-means clustering by utilizing the elbow method
+**Web K-Means** is a web application that helps users determine the optimal number of clusters (*k*) for the k-means clustering algorithm by utilizing the **Elbow Method**.
 
-The k-means algorithm is a data clustering algorithm. The main drawback is that the user must specify the number (k) of the clusters that the algorithm will "discover". However, the user may not advance the specific number, and if the algorithm is run with a different value of k, completely different clusters will be discovered. One way to specify the parameter value is the Elbow method. The goal of the thesis is the development of a web application where each user will be able to upload data sets and the application will construct the graph where the "elbow" will be presented and will suggest to the user a possible value for the parameter k.
+The **k-means** algorithm groups data into *k* clusters, but its main drawback is that the user must define *k* in advance. Choosing different values for *k* can produce completely different clustering results. The **Elbow Method** assists by plotting the distortion for different *k* values and identifying the point where increasing *k* no longer significantly improves performance.
+
+🔬 **Publications & Evolution**:
+- The project was **presented and published** at **NiDS 2023 (Conference on Informatics & Data Science)**.
+- Following the conference, the web app evolved into **K-Cluster Hub**, extending support to additional clustering algorithms such as **K-Modes** and **K-Prototypes**, enabling analysis of categorical and mixed-type data.
+- The extended version was **published in MDPI.**
+
+🧪 **Live Demo – K-Cluster Hub**: [https://kclusterhub.iee.ihu.gr/](https://kclusterhub.iee.ihu.gr/)  
+📄 **Publication Links**:  
+- [NiDS 2023 Publication](https://link.springer.com/chapter/10.1007/978-3-031-44097-7_9)  
+- [MDPI Journal Article](https://www.mdpi.com/1999-5903/15/10/341)
  
